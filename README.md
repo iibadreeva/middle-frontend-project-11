@@ -1,15 +1,17 @@
 # Hexlet tests and linter status:
 [![Node CI](https://github.com/iibadreeva/middle-frontend-project-11/actions/workflows/nodejs.yml/badge.svg)](https://github.com/iibadreeva/middle-frontend-project-11/actions/workflows/nodejs.yml)
 
+### RSS Aggregator [демо](https://middle-frontend-project-11.vercel.app/)
+
 ## Setup
 
 ```sh
-make install
+npm install
 ```
 
 ## Run
 
 ```sh
-make develop
+npm run dev
 ```
 

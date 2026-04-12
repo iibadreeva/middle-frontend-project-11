@@ -55,7 +55,7 @@ document.querySelector('#app').innerHTML = `<div class="d-flex flex-column min-v
         <footer class="footer border-top py-3 mt-5 bg-light">
             <div class="container-xl">
                 <div class="text-center">
-                    created by <a href="https://github.com/HaimOzer/frontend-project-11" target="_blank">Alex Zuev</a>
+                    ссылка на github <a href="https://github.com/iibadreeva/middle-frontend-project-11" target="_blank"></a>
                 </div>
             </div>
         </footer>
