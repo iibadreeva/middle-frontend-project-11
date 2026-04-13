@@ -7,10 +7,11 @@ export const renderUpdateError = updateError => {
 
   if (updateError) {
     feedback.textContent = i18n.t(`errors.${updateError}`);
+    feedback.dataset.errorSource = 'network';
   } else {
-    // Only clear if this watcher put the message there (no form error active)
-    if (feedback.textContent === i18n.t('errors.networkError')) {
+    if (feedback.dataset.errorSource === 'network') {
       feedback.textContent = '';
+      delete feedback.dataset.errorSource;
     }
   }
 };
