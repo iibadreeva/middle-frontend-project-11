@@ -121,8 +121,10 @@ const checkForNewPosts = () =>
 
 const startAutoUpdate = () => {
   const tick = () => {
+      // eslint-disable-next-line no-undef
     checkForNewPosts().finally(() => setTimeout(tick, AUTO_UPDATE_INTERVAL));
   };
+    // eslint-disable-next-line no-undef
   setTimeout(tick, AUTO_UPDATE_INTERVAL);
 };
 

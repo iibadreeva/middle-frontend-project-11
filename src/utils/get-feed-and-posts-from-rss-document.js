@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import { v4 as uuid } from 'uuid';
 
 import { getElementText } from './get-element-text.js';
