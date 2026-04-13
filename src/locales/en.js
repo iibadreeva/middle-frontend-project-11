@@ -11,7 +11,8 @@ export default {
       required: 'It should not be empty',
       invalidUrl: 'The link must be a valid URL.',
       duplicate: 'RSS already exists',
-      networkError: 'Network error. Please try again.',
+      networkError: 'Network error',
+      xmlError: 'Resource does not contain valid RSS',
     },
     feeds: {
       title: 'Feeds',

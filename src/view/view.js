@@ -3,7 +3,6 @@ import { subscribe } from 'valtio/vanilla';
 import * as templates from '../../example/template.js';
 import { state } from '../model.js';
 import { applyI18nTexts } from './helpers/render.js';
-import { focusInput } from './watchers/focus-input.js';
 import { renderError } from './watchers/render-error.js';
 import { renderFeeds } from './watchers/render-feeds.js';
 import { renderFormState } from './watchers/render-form-state.js';
@@ -20,16 +19,12 @@ const initView = () => {
   renderFormState('neutral');
 
   subscribe(state, () => {
+    renderLoading(state.isLoading);
     renderFormState(state.formState);
     renderError(state.errors);
-    renderLoading(state.isLoading);
     renderFeeds(state.feeds);
     renderPosts(state.posts);
     renderUpdateError(state.updateError);
-
-    if (state.formState === 'successful') {
-      focusInput();
-    }
   });
 };
 

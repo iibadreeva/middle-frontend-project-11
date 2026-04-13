@@ -30,12 +30,36 @@ const fetchFeed = url =>
   axios
     .get(buildApiUrl(url), { timeout: FETCH_TIMEOUT })
     .then(response => {
-      if (!response.data?.contents) return Promise.reject(new Error('networkError'));
-      return parseXmlDocument(response.data.contents);
+      if (!response.data?.contents) {
+        return Promise.reject(new Error('networkError'));
+      }
+
+      let xmlDoc;
+      try {
+        xmlDoc = parseXmlDocument(response.data.contents);
+      } catch {
+        return Promise.reject(new Error('xmlError'));
+      }
+
+      try {
+        return getFeedAndPostsFromRssDocument(xmlDoc, url);
+      } catch {
+        return Promise.reject(new Error('xmlError'));
+      }
     })
-    .then(xmlDoc => getFeedAndPostsFromRssDocument(xmlDoc, url))
+    // .then(response => {
+    //   if (!response.data?.contents) {
+    //     throw new Error('networkError');
+    //   }
+    //
+    //   const xmlDoc = parseXmlDocument(response.data.contents);
+    //   return getFeedAndPostsFromRssDocument(xmlDoc, url);
+    // })
     .catch(err => {
-      if (err.message === 'networkError') return Promise.reject(err);
+      if (err.message === 'networkError' || err.message === 'xmlError') {
+        return Promise.reject(err);
+      }
+
       return Promise.reject(new Error('networkError'));
     });
 
@@ -70,12 +94,18 @@ const fetchNewPosts = url =>
   axios
     .get(buildApiUrl(url), { timeout: FETCH_TIMEOUT })
     .then(response => {
-      if (!response.data?.contents) return [];
+      if (!response.data?.contents) return null;
       return parseXmlDocument(response.data.contents);
     })
     .then(xmlDoc => getFeedAndPostsFromRssDocument(xmlDoc, url))
     .then(({ posts }) => posts.filter(isPostNew))
-    .catch(() => null); // null signals a fetch error for this url
+    .catch(err => {
+      if (err.message === 'networkError' || err.message === 'xmlError') {
+        return Promise.reject(err);
+      }
+
+      return Promise.reject(new Error('networkError'));
+    });
 
 const checkForNewPosts = () =>
   Promise.all(state.links.map(fetchNewPosts)).then(results => {

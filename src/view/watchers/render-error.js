@@ -11,7 +11,7 @@ export const renderError = errors => {
   if (!feedback) return;
 
   if (errors?.url) {
-    feedback.textContent = i18n.t(`errors.${errors.url}`);
+    feedback.textContent = `${i18n.t(`errors.${errors.url}`)} `;
     input?.classList.add('is-invalid');
   } else {
     feedback.textContent = '';

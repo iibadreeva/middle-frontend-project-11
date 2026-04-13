@@ -42,10 +42,9 @@ export const main = `<div class="d-flex flex-column min-vh-100">
             <p class="text-white-50 mt-2 mb-0" data-i18n="rssForm.descriptionText">
               Пример: https://lorem-rss.hexlet.app/feed
             </p>
-            <p
-              class="feedback m-0 position-absolute small text-danger"
-              data-i18n="rssForm.errorMessages"
-            ></p>
+            <div class="js-info">
+              <p class="feedback m-0 position-absolute small text-danger" data-i18n="rssForm.errorMessages"></p>
+            </div>
           </div>
         </div>
       </section>
@@ -120,144 +119,21 @@ export const main = `<div class="d-flex flex-column min-vh-100">
     </div>
   </div>`;
 
-export const neutral = `<div class="col-md-10 col-lg-8 mx-auto text-white">
-    <h1 class="display-3 mb-0" data-i18n="rssForm.title">
-      RSS агрегатор
-    </h1>
-    <p class="lead" data-i18n="rssForm.subtitle">
-      Начните читать RSS сегодня! Это легко, это красиво.
-    </p>
-    <form class="rss-form text-body">
-      <div class="row">
-        <div class="col-12 col-sm-8 mb-3 mb-sm-0">
-          <div class="form-floating">
-            <input
-              class="form-control w-100"
-              id="url-input"
-              name="url"
-              aria-label="url"
-              autoComplete="off"
-              placeholder="Ссылка RSS"
-              required=""
-            />
-            <label htmlFor="url-input" data-i18n="rssForm.inputText">
-              Ссылка RSS
-            </label>
-          </div>
-        </div>
-        <div class="col-12 col-sm-4">
-          <button
-            class="h-100 btn btn-lg btn-primary px-sm-5"
-            type="submit"
-            aria-label="add"
-            data-i18n="rssForm.buttonText"
-          >
-            Добавить
-          </button>
-        </div>
-      </div>
-    </form>
-    <p class="text-white-50 mt-2 mb-0" data-i18n="rssForm.descriptionText">
-      Пример: https://lorem-rss.hexlet.app/feed
-    </p>
-    <p
-      class="feedback m-0 position-absolute small text-danger"
-      data-i18n="rssForm.errorMessages"
-    ></p>
-  </div>`;
+export const neutral = `<p
+        class="feedback m-0 position-absolute small text-danger"
+        data-i18n="rssForm.errorMessages"
+      ></p>`;
 
-export const successful = `<div class="col-md-10 col-lg-8 mx-auto text-white">
-    <h1 class="display-3 mb-0" data-i18n="rssForm.title">
-      RSS агрегатор
-    </h1>
-    <p class="lead" data-i18n="rssForm.subtitle">
-      Начните читать RSS сегодня! Это легко, это красиво.
-    </p>
-    <form class="rss-form text-body">
-      <div class="row">
-        <div class="col-12 col-sm-8 mb-3 mb-sm-0">
-          <div class="form-floating">
-            <input
-              class="form-control w-100"
-              id="url-input"
-              name="url"
-              aria-label="url"
-              autoComplete="off"
-              placeholder="Ссылка RSS"
-              required=""
-            />
-            <label htmlFor="url-input" data-i18n="rssForm.inputText">
-              Ссылка RSS
-            </label>
-          </div>
-        </div>
-        <div class="col-12 col-sm-4">
-          <button
-            class="h-100 btn btn-lg btn-primary px-sm-5"
-            type="submit"
-            aria-label="add"
-            data-i18n="rssForm.buttonText"
-          >
-            Добавить
-          </button>
-        </div>
-      </div>
-    </form>
-    <p class="text-white-50 mt-2 mb-0" data-i18n="rssForm.descriptionText">
-      Пример: https://lorem-rss.hexlet.app/feed
-    </p>
-    <p
+export const successful = `<p
       class="feedback m-0 position-absolute small text-success"
       data-i18n="rssForm.errorMessages"
     >
       RSS успешно загружен
-    </p>
-  </div>`;
+    </p>`;
 
-export const error = `<div class="col-md-10 col-lg-8 mx-auto text-white">
-    <h1 class="display-3 mb-0" data-i18n="rssForm.title">
-      RSS агрегатор
-    </h1>
-    <p class="lead" data-i18n="rssForm.subtitle">
-      Начните читать RSS сегодня! Это легко, это красиво.
-    </p>
-    <form class="rss-form text-body">
-      <div class="row">
-        <div class="col-12 col-sm-8 mb-3 mb-sm-0">
-          <div class="form-floating">
-            <input
-              class="form-control w-100 is-invalid"
-              id="url-input"
-              name="url"
-              aria-label="url"
-              autoComplete="off"
-              placeholder="Ссылка RSS"
-              required=""
-            />
-            <label htmlFor="url-input" data-i18n="rssForm.inputText">
-              Ссылка RSS
-            </label>
-          </div>
-        </div>
-        <div class="col-12 col-sm-4">
-          <button
-            class="h-100 btn btn-lg btn-primary px-sm-5"
-            type="submit"
-            aria-label="add"
-            data-i18n="rssForm.buttonText"
-          >
-            Добавить
-          </button>
-        </div>
-      </div>
-    </form>
-    <p class="text-white-50 mt-2 mb-0" data-i18n="rssForm.descriptionText">
-      Пример: https://lorem-rss.hexlet.app/feed
-    </p>
-    <p
+export const error = `<p
       class="feedback m-0 position-absolute small text-danger"
       data-i18n="rssForm.errorMessages"
     >
       Ссылка должна быть валидным URL
-    </p>
-  </div>`;
+    </p>`;
