@@ -10,7 +10,8 @@ import { renderLoading } from './watchers/render-loading.js'
 import { renderPosts } from './watchers/render-posts.js'
 import { renderUpdateError } from './watchers/render-update-error.js'
 
-const initView = () => {
+const initView = () => 
+{
   const container = document.getElementById('app')
   container.innerHTML = templates.main
   applyI18nTexts()
@@ -18,7 +19,8 @@ const initView = () => {
   // Render initial form state inside the dark section
   renderFormState('neutral')
 
-  subscribe(state, () => {
+  subscribe(state, () => 
+{
     renderLoading(state.isLoading)
     renderFormState(state.formState)
     renderError(state.errors)

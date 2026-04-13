@@ -31,7 +31,7 @@ export default [
       'eol-last': ['error', 'always'],
       'comma-dangle': ['error', 'always-multiline'],
       'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
-      'brace-style': ['error', '1tbs', { allowSingleLine: true }],
+      'brace-style': ['error', 'allman'],
     },
   },
 ]

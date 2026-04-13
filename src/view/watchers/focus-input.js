@@ -1,8 +1,10 @@
 import { getInput } from '../helpers/dom.js'
 
-export const focusInput = () => {
+export const focusInput = () => 
+{
   const input = getInput()
-  if (input) {
+  if (input) 
+{
     input.value = ''
     input.focus()
   }

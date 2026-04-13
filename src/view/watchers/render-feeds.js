@@ -1,7 +1,8 @@
 import { i18n } from '../../i18n.js'
 import { getFeeds } from '../helpers/dom.js'
 
-const buildFeedItem = ({ feedTitle, feedDescription }) => {
+const buildFeedItem = ({ feedTitle, feedDescription }) => 
+{
   const li = document.createElement('li')
   li.className = 'list-group-item border-0 border-end-0'
 
@@ -17,7 +18,8 @@ const buildFeedItem = ({ feedTitle, feedDescription }) => {
   return li
 }
 
-export const renderFeeds = (feeds) => {
+export const renderFeeds = (feeds) => 
+{
   const section = getFeeds()
   if (!section || feeds.length === 0) return
 
@@ -25,7 +27,8 @@ export const renderFeeds = (feeds) => {
   const list = section.querySelector('.list-group-feeds')
   if (!cardBody || !list) return
 
-  if (!cardBody.querySelector('h2')) {
+  if (!cardBody.querySelector('h2')) 
+{
     const h2 = document.createElement('h2')
     h2.className = 'card-title h4'
     h2.textContent = i18n.t('feeds.title')

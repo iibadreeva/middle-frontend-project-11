@@ -29,21 +29,29 @@ const checkDuplicate = url =>
 const fetchFeed = url =>
   axios
     .get(buildApiUrl(url), { timeout: FETCH_TIMEOUT })
-    .then((response) => {
-      if (!response.data?.contents) {
+    .then((response) =>
+{
+      if (!response.data?.contents)
+{
         return Promise.reject(new Error('networkError'))
       }
 
       let xmlDoc
-      try {
+      try 
+{
         xmlDoc = parseXmlDocument(response.data.contents)
-      } catch {
+      }
+ catch 
+{
         return Promise.reject(new Error('xmlError'))
       }
 
-      try {
+      try 
+{
         return getFeedAndPostsFromRssDocument(xmlDoc, url)
-      } catch {
+      }
+ catch 
+{
         return Promise.reject(new Error('xmlError'))
       }
     })
@@ -55,15 +63,18 @@ const fetchFeed = url =>
     //   const xmlDoc = parseXmlDocument(response.data.contents);
     //   return getFeedAndPostsFromRssDocument(xmlDoc, url);
     // })
-    .catch((err) => {
-      if (err.message === 'networkError' || err.message === 'xmlError') {
+    .catch((err) => 
+{
+      if (err.message === 'networkError' || err.message === 'xmlError') 
+{
         return Promise.reject(err)
       }
 
       return Promise.reject(new Error('networkError'))
     })
 
-const handleSubmit = (e) => {
+const handleSubmit = (e) => 
+{
   e.preventDefault()
   const { inputValue } = state
 
@@ -76,11 +87,13 @@ const handleSubmit = (e) => {
     .then(fetchFeed)
     .then(addFeed)
     .then(clearForm)
-    .catch((err) => {
+    .catch((err) => 
+{
       state.errors = { url: err.message }
       state.formState = 'error'
     })
-    .finally(() => {
+    .finally(() => 
+{
       state.isLoading = false
     })
 }
@@ -93,14 +106,17 @@ const isPostNew = post =>
 const fetchNewPosts = url =>
   axios
     .get(buildApiUrl(url), { timeout: FETCH_TIMEOUT })
-    .then((response) => {
+    .then((response) => 
+{
       if (!response.data?.contents) return null
       return parseXmlDocument(response.data.contents)
     })
     .then(xmlDoc => getFeedAndPostsFromRssDocument(xmlDoc, url))
     .then(({ posts }) => posts.filter(isPostNew))
-    .catch((err) => {
-      if (err.message === 'networkError' || err.message === 'xmlError') {
+    .catch((err) => 
+{
+      if (err.message === 'networkError' || err.message === 'xmlError') 
+{
         return Promise.reject(err)
       }
 
@@ -108,25 +124,30 @@ const fetchNewPosts = url =>
     })
 
 const checkForNewPosts = () =>
-  Promise.all(state.links.map(fetchNewPosts)).then((results) => {
+  Promise.all(state.links.map(fetchNewPosts)).then((results) => 
+{
     const hadError = results.some(r => r === null)
     const newPosts = results.filter(Boolean).flat()
 
-    if (newPosts.length > 0) {
+    if (newPosts.length > 0) 
+{
       state.posts = [...newPosts, ...state.posts]
     }
 
     state.updateError = hadError ? 'networkError' : null
   })
 
-const startAutoUpdate = () => {
-  const tick = () => {
+const startAutoUpdate = () => 
+{
+  const tick = () => 
+{
     checkForNewPosts().finally(() => setTimeout(tick, AUTO_UPDATE_INTERVAL))
   }
   setTimeout(tick, AUTO_UPDATE_INTERVAL)
 }
 
-const handlePostClick = (btn) => {
+const handlePostClick = (btn) => 
+{
   const id = btn?.dataset?.id
   const post = state.posts.find(item => item.id === id)
   if (!post || !id) return
@@ -140,7 +161,8 @@ const handlePostClick = (btn) => {
   modal.show()
 }
 
-const handleCloseModal = () => {
+const handleCloseModal = () => 
+{
   const modalElement = getModal()
   if (!modalElement) return
 
