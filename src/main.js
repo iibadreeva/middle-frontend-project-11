@@ -8,4 +8,3 @@ initI18n().then(() => {
   initView()
   startAutoUpdate()
 })
-

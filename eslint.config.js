@@ -24,10 +24,12 @@ export default [
         { avoidEscape: true },
       ],
       'semi': ['error', 'never'],
-      'no-multiple-empty-lines': ['error', { max: 1 }],
+      'no-multiple-empty-lines': [
+        'error',
+        { max: 1, maxEOF: 0 },
+      ],
       'eol-last': ['error', 'always'],
       'comma-dangle': ['error', 'always-multiline'],
     },
   },
 ]
-
