@@ -1,13 +1,6 @@
 import { i18n } from '../../i18n.js';
 import { getFeeds } from '../helpers/dom.js';
 
-const escapeHtml = str =>
-  String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-
 const buildFeedItem = ({ feedTitle, feedDescription }) => {
   const li = document.createElement('li');
   li.className = 'list-group-item border-0 border-end-0';
