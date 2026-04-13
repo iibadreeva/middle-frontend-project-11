@@ -6,6 +6,9 @@ export const bindFormEvents = () => {
   const form = document.querySelector('.rss-form');
   const input = getInput();
   if (form) form.addEventListener('submit', handleSubmit);
+
+  // console.log('feed', JSON.parse(JSON.stringify(state.feeds)));
+  // console.log('posts', JSON.parse(JSON.stringify(state.posts)));
   if (input) {
     input.addEventListener('input', e => {
       state.inputValue = e.target.value;

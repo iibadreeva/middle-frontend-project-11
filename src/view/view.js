@@ -20,7 +20,9 @@ const initView = () => {
     renderFormState(state.formState);
     renderError(state.errors);
     renderLoading(state.isLoading);
-    if (state.formState === 'successful') focusInput();
+    if (state.formState === 'successful') {
+      focusInput();
+    }
   });
 };
 
