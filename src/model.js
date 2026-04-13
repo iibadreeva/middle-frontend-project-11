@@ -13,15 +13,13 @@ const state = proxy({
   updateError: null, // error code shown during auto-update failures
 })
 
-const clearForm = () => 
-{
+const clearForm = () => {
   state.inputValue = ''
   state.errors = {}
   state.formState = 'successful'
 }
 
-const addFeed = ({ feed, posts, url }) => 
-{
+const addFeed = ({ feed, posts, url }) => {
   state.links = [...state.links, url]
   state.posts = [...state.posts, ...posts]
   state.feeds = [...state.feeds, feed]

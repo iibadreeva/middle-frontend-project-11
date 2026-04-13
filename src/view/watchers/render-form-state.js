@@ -12,8 +12,7 @@ const templateMap = {
 
 let lastFormState = null
 
-export const renderFormState = (formState) => 
-{
+export const renderFormState = (formState) => {
   if (formState === lastFormState) return
   lastFormState = formState
 
@@ -24,10 +23,8 @@ export const renderFormState = (formState) =>
   applyI18nTexts()
   bindFormEvents()
 
-  if (formState === 'successful') 
-{
-    const timeoutId = setTimeout(() => 
-{
+  if (formState === 'successful') {
+    const timeoutId = setTimeout(() => {
       clearTimeout(timeoutId)
       focusInput()
     }, 0)

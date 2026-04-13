@@ -8,8 +8,7 @@ const i18n = i18next.createInstance()
 const defaultLanguage = 'ru'
 
 const initI18n = () =>
-  i18n.init({ lng: defaultLanguage, resources }).then(() => 
-{
+  i18n.init({ lng: defaultLanguage, resources }).then(() => {
     yup.setLocale({
       mixed: { required: 'required' },
       string: { url: 'invalidUrl' },

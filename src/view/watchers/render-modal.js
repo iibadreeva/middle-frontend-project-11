@@ -1,7 +1,6 @@
 import { getModalBody, getModalLink, getModalTitle, getPostItem } from '../helpers/dom.js'
 
-export const renderModal = (post, id) => 
-{
+export const renderModal = (post, id) => {
   if (!post) return
 
   getModalBody().innerHTML = post.description

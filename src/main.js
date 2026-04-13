@@ -4,8 +4,7 @@ import { initView } from './view/view.js'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-initI18n().then(() => 
-{
+initI18n().then(() => {
   initView()
   startAutoUpdate()
 })
