@@ -117,23 +117,23 @@ export const main = `<div class="d-flex flex-column min-vh-100">
         </div>
       </div>
     </div>
-  </div>`;
+  </div>`
 
 export const neutral = `<p
         class="feedback m-0 position-absolute small text-danger"
         data-i18n="rssForm.errorMessages"
-      ></p>`;
+      ></p>`
 
 export const successful = `<p
       class="feedback m-0 position-absolute small text-success"
       data-i18n="rssForm.errorMessages"
     >
       RSS успешно загружен
-    </p>`;
+    </p>`
 
 export const error = `<p
       class="feedback m-0 position-absolute small text-danger"
       data-i18n="rssForm.errorMessages"
     >
       Ссылка должна быть валидным URL
-    </p>`;
+    </p>`

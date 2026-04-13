@@ -2,7 +2,7 @@ export default {
   translation: {
     rssForm: {
       title: 'RSS aggregator',
-      subtitle: "Start reading RSS today! It's easy, and it's beautiful.",
+      subtitle: 'Start reading RSS today! It\'s easy, and it\'s beautiful.',
       inputText: 'RSS link',
       buttonText: 'Add',
       descriptionText: 'Example: https://lorem-rss.hexlet.app/feed',
@@ -24,4 +24,4 @@ export default {
       secondaryButton: 'To close',
     },
   },
-};
+}

@@ -1,11 +1,11 @@
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from 'uuid'
 
-import { getElementText } from './get-element-text.js';
-import { getPostsFromElements } from './get-posts-from-elements.js';
+import { getElementText } from './get-element-text.js'
+import { getPostsFromElements } from './get-posts-from-elements.js'
 
 export const getFeedAndPostsFromRssDocument = (rssXmlDOM, url) => {
-  const itemElements = rssXmlDOM.querySelectorAll('item');
-  const feedId = uuid();
+  const itemElements = rssXmlDOM.querySelectorAll('item')
+  const feedId = uuid()
   return {
     feed: {
       feedId,
@@ -14,5 +14,5 @@ export const getFeedAndPostsFromRssDocument = (rssXmlDOM, url) => {
     },
     posts: getPostsFromElements(itemElements, feedId),
     url,
-  };
-};
+  }
+}

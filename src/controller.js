@@ -1,50 +1,50 @@
-import axios from 'axios';
-import { Modal } from 'bootstrap';
-import * as yup from 'yup';
+import axios from 'axios'
+import { Modal } from 'bootstrap'
+import * as yup from 'yup'
 
-import { addFeed, clearForm, state } from './model.js';
-import { getFeedAndPostsFromRssDocument } from './utils/get-feed-and-posts-from-rss-document.js';
-import { parseXmlDocument } from './utils/parse-xml-document.js';
-import { getModal } from './view/helpers/dom.js';
-import { renderModal } from './view/watchers/render-modal.js';
+import { addFeed, clearForm, state } from './model.js'
+import { getFeedAndPostsFromRssDocument } from './utils/get-feed-and-posts-from-rss-document.js'
+import { parseXmlDocument } from './utils/parse-xml-document.js'
+import { getModal } from './view/helpers/dom.js'
+import { renderModal } from './view/watchers/render-modal.js'
 
-const AUTO_UPDATE_INTERVAL = 1000 * 5;
-const FETCH_TIMEOUT = 1000 * 30;
+const AUTO_UPDATE_INTERVAL = 1000 * 5
+const FETCH_TIMEOUT = 1000 * 30
 
 const buildApiUrl = url =>
-  `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`;
+  `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`
 
 // Returns a schema that yields error *codes* (set via yup.setLocale in i18n.js)
-const getSchema = () => yup.object({ url: yup.string().required().url() });
+const getSchema = () => yup.object({ url: yup.string().required().url() })
 
 const validateSchema = url =>
   getSchema()
     .validate({ url }, { abortEarly: true })
     .then(() => url)
-    .catch(err => Promise.reject(new Error(err.message)));
+    .catch(err => Promise.reject(new Error(err.message)))
 
 const checkDuplicate = url =>
-  state.links.includes(url) ? Promise.reject(new Error('duplicate')) : Promise.resolve(url);
+  state.links.includes(url) ? Promise.reject(new Error('duplicate')) : Promise.resolve(url)
 
 const fetchFeed = url =>
   axios
     .get(buildApiUrl(url), { timeout: FETCH_TIMEOUT })
     .then(response => {
       if (!response.data?.contents) {
-        return Promise.reject(new Error('networkError'));
+        return Promise.reject(new Error('networkError'))
       }
 
-      let xmlDoc;
+      let xmlDoc
       try {
-        xmlDoc = parseXmlDocument(response.data.contents);
+        xmlDoc = parseXmlDocument(response.data.contents)
       } catch {
-        return Promise.reject(new Error('xmlError'));
+        return Promise.reject(new Error('xmlError'))
       }
 
       try {
-        return getFeedAndPostsFromRssDocument(xmlDoc, url);
+        return getFeedAndPostsFromRssDocument(xmlDoc, url)
       } catch {
-        return Promise.reject(new Error('xmlError'));
+        return Promise.reject(new Error('xmlError'))
       }
     })
     // .then(response => {
@@ -57,19 +57,19 @@ const fetchFeed = url =>
     // })
     .catch(err => {
       if (err.message === 'networkError' || err.message === 'xmlError') {
-        return Promise.reject(err);
+        return Promise.reject(err)
       }
 
-      return Promise.reject(new Error('networkError'));
-    });
+      return Promise.reject(new Error('networkError'))
+    })
 
 const handleSubmit = e => {
-  e.preventDefault();
-  const { inputValue } = state;
+  e.preventDefault()
+  const { inputValue } = state
 
-  state.errors = {};
-  state.isLoading = true;
-  state.formState = 'neutral';
+  state.errors = {}
+  state.isLoading = true
+  state.formState = 'neutral'
 
   validateSchema(inputValue)
     .then(checkDuplicate)
@@ -77,75 +77,75 @@ const handleSubmit = e => {
     .then(addFeed)
     .then(clearForm)
     .catch(err => {
-      state.errors = { url: err.message };
-      state.formState = 'error';
+      state.errors = { url: err.message }
+      state.formState = 'error'
     })
     .finally(() => {
-      state.isLoading = false;
-    });
-};
+      state.isLoading = false
+    })
+}
 
 // --- Auto-update ---
 
 const isPostNew = post =>
-  !state.posts.some(existing => existing.link === post.link && existing.title === post.title);
+  !state.posts.some(existing => existing.link === post.link && existing.title === post.title)
 
 const fetchNewPosts = url =>
   axios
     .get(buildApiUrl(url), { timeout: FETCH_TIMEOUT })
     .then(response => {
-      if (!response.data?.contents) return null;
-      return parseXmlDocument(response.data.contents);
+      if (!response.data?.contents) return null
+      return parseXmlDocument(response.data.contents)
     })
     .then(xmlDoc => getFeedAndPostsFromRssDocument(xmlDoc, url))
     .then(({ posts }) => posts.filter(isPostNew))
     .catch(err => {
       if (err.message === 'networkError' || err.message === 'xmlError') {
-        return Promise.reject(err);
+        return Promise.reject(err)
       }
 
-      return Promise.reject(new Error('networkError'));
-    });
+      return Promise.reject(new Error('networkError'))
+    })
 
 const checkForNewPosts = () =>
   Promise.all(state.links.map(fetchNewPosts)).then(results => {
-    const hadError = results.some(r => r === null);
-    const newPosts = results.filter(Boolean).flat();
+    const hadError = results.some(r => r === null)
+    const newPosts = results.filter(Boolean).flat()
 
     if (newPosts.length > 0) {
-      state.posts = [...newPosts, ...state.posts];
+      state.posts = [...newPosts, ...state.posts]
     }
 
-    state.updateError = hadError ? 'networkError' : null;
-  });
+    state.updateError = hadError ? 'networkError' : null
+  })
 
 const startAutoUpdate = () => {
   const tick = () => {
-    checkForNewPosts().finally(() => setTimeout(tick, AUTO_UPDATE_INTERVAL));
-  };
-  setTimeout(tick, AUTO_UPDATE_INTERVAL);
-};
+    checkForNewPosts().finally(() => setTimeout(tick, AUTO_UPDATE_INTERVAL))
+  }
+  setTimeout(tick, AUTO_UPDATE_INTERVAL)
+}
 
 const handlePostClick = btn => {
-  const id = btn?.dataset?.id;
-  const post = state.posts.find(item => item.id === id);
-  if (!post || !id) return;
+  const id = btn?.dataset?.id
+  const post = state.posts.find(item => item.id === id)
+  if (!post || !id) return
 
-  renderModal(post, id);
+  renderModal(post, id)
 
-  const modalElement = getModal();
-  if (!modalElement) return;
+  const modalElement = getModal()
+  if (!modalElement) return
 
-  const modal = Modal.getOrCreateInstance(modalElement);
-  modal.show();
-};
+  const modal = Modal.getOrCreateInstance(modalElement)
+  modal.show()
+}
 
 const handleCloseModal = () => {
-  const modalElement = getModal();
-  if (!modalElement) return;
+  const modalElement = getModal()
+  if (!modalElement) return
 
-  const modal = Modal.getOrCreateInstance(modalElement);
-  modal.hide();
-};
+  const modal = Modal.getOrCreateInstance(modalElement)
+  modal.hide()
+}
 
-export { handleSubmit, startAutoUpdate, handlePostClick, handleCloseModal };
+export { handleSubmit, startAutoUpdate, handlePostClick, handleCloseModal }
