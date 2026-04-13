@@ -15,18 +15,19 @@ export default [
         clearTimeout: 'readonly',
         setTimeout: 'readonly',
         DOMParser: 'readonly',
-      }
+      },
     },
     rules: {
       'quotes': [
         'error',
         'single',
-        { avoidEscape: true }
+        { avoidEscape: true },
       ],
       'semi': ['error', 'never'],
       'no-multiple-empty-lines': ['error', { max: 1 }],
-      'eol-last': ['error', 'always']
-    }
-  }
+      'eol-last': ['error', 'always'],
+      'comma-dangle': ['error', 'always-multiline'],
+    },
+  },
 ]
 
