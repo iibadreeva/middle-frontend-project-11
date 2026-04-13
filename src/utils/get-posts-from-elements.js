@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 import { getElementText } from './get-element-text.js';
 
 export const getPostsFromElements = (elements, feedId) => {
@@ -7,9 +9,8 @@ export const getPostsFromElements = (elements, feedId) => {
     const title = getElementText('title', item);
     const description = getElementText('description', item);
     const link = getElementText('link', item);
-    const id = getElementText('guid', item);
     return {
-      id,
+      id: uuid(),
       feedId,
       title,
       description,

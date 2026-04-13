@@ -1,9 +1,12 @@
 import axios from 'axios';
+import { Modal } from 'bootstrap';
 import * as yup from 'yup';
 
 import { addFeed, clearForm, state } from './model.js';
 import { getFeedAndPostsFromRssDocument } from './utils/get-feed-and-posts-from-rss-document.js';
 import { parseXmlDocument } from './utils/parse-xml-document.js';
+import { getModal } from './view/helpers/dom.js';
+import { renderModal } from './view/watchers/render-modal.js';
 
 const AUTO_UPDATE_INTERVAL = 1000 * 5;
 const FETCH_TIMEOUT = 1000 * 30;
@@ -93,4 +96,26 @@ const startAutoUpdate = () => {
   setTimeout(tick, AUTO_UPDATE_INTERVAL);
 };
 
-export { handleSubmit, startAutoUpdate };
+const handlePostClick = btn => {
+  const id = btn?.dataset?.id;
+  const post = state.posts.find(item => item.id === id);
+  if (!post || !id) return;
+
+  renderModal(post, id);
+
+  const modalElement = getModal();
+  if (!modalElement) return;
+
+  const modal = Modal.getOrCreateInstance(modalElement);
+  modal.show();
+};
+
+const handleCloseModal = () => {
+  const modalElement = getModal();
+  if (!modalElement) return;
+
+  const modal = Modal.getOrCreateInstance(modalElement);
+  modal.hide();
+};
+
+export { handleSubmit, startAutoUpdate, handlePostClick, handleCloseModal };

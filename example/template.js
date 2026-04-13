@@ -77,7 +77,7 @@ export const main = `<div class="d-flex flex-column min-vh-100">
       </div>
     </footer>
     <div
-      class="modal fade"
+      class="modal fade "
       id="modal"
       tabIndex="-1"
       aria-labelledby="modalLabel"
@@ -86,20 +86,20 @@ export const main = `<div class="d-flex flex-column min-vh-100">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="modalLabel">
+            <h1 class="modal-title fs-5 js-modal-title" id="modalLabel">
               Modal title
             </h1>
             <button
               type="button"
-              class="btn-close"
+              class="btn-close js-close-modal"
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body text-break"></div>
-          <div class="modal-footer">
+          <div class="modal-body text-break js-modal-body "></div>
+          <div class="modal-footer js-close-modal">
             <a
-              class="btn btn-primary full-article"
+              class="btn btn-primary full-article js-modal-link"
               href="#"
               target="_blank"
               data-i18n="modalWindow.mainButton"
@@ -108,7 +108,7 @@ export const main = `<div class="d-flex flex-column min-vh-100">
             </a>
             <button
               type="button"
-              class="btn btn-secondary"
+              class="btn btn-secondary js-close-modal"
               data-bs-dismiss="modal"
               data-i18n="modalWindow.secondaryButton"
             >

@@ -1,4 +1,4 @@
-import { handleSubmit } from '../controller.js';
+import { handleCloseModal, handlePostClick, handleSubmit } from '../controller.js';
 import { state } from '../model.js';
 import { getInput } from './helpers/dom.js';
 
@@ -7,13 +7,25 @@ export const bindFormEvents = () => {
   const input = getInput();
   if (form) form.addEventListener('submit', handleSubmit);
 
-  // console.log('feed', JSON.parse(JSON.stringify(state.feeds)));
-  // console.log('posts', JSON.parse(JSON.stringify(state.posts)));
   if (input) {
     input.addEventListener('input', e => {
-      state.inputValue = e.target.value;
+      state.inputValue = e.target.value.trim();
     });
     // Restore current value after template swap
     input.value = state.inputValue;
   }
+
+  document.addEventListener('click', event => {
+    const btn = event.target.closest('.js-modal-btn');
+    const closeBtn = event.target.closest('.js-close-modal');
+
+    if (btn) {
+      handlePostClick(btn);
+      return;
+    }
+
+    if (closeBtn) {
+      handleCloseModal();
+    }
+  });
 };
