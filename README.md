@@ -1,5 +1,5 @@
 # Hexlet tests and linter status:
-[![Node CI](https://github.com/iibadreeva/middle-frontend-project-11/actions/workflows/nodejs.yml/badge.svg)](https://github.com/iibadreeva/middle-frontend-project-11/actions/workflows/hexlet-check.yml)
+[![Node CI](https://github.com/iibadreeva/middle-frontend-project-11/actions/workflows/nodejs.yml/hexlet-check.svg)](https://github.com/iibadreeva/middle-frontend-project-11/actions/workflows/hexlet-check.yml)
 
 ### RSS Aggregator [демо](https://middle-frontend-project-11.vercel.app/)
 Деплой получившееся на [Vercel](https://vercel.com/iibadreevas-projects).
