@@ -13,6 +13,11 @@ export default {
       duplicate: 'RSS already exists',
       networkError: 'Network error. Please try again.',
     },
+    feeds: {
+      title: 'Feeds',
+      postsTitle: 'Posts',
+      viewButton: 'Preview',
+    },
     modalWindow: {
       mainButton: 'Read completely',
       secondaryButton: 'To close',

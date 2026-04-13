@@ -10,6 +10,7 @@ const state = proxy({
   feeds: [],
   posts: [],
   formState: 'neutral', // 'neutral' | 'error' | 'successful'
+  updateError: null, // error code shown during auto-update failures
 });
 
 const clearForm = () => {

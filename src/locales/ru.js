@@ -13,6 +13,11 @@ export default {
       duplicate: 'RSS уже существует',
       networkError: 'Ошибка сети. Попробуйте ещё раз.',
     },
+    feeds: {
+      title: 'Фиды',
+      postsTitle: 'Посты',
+      viewButton: 'Просмотр',
+    },
     modalWindow: {
       mainButton: 'Читать полностью',
       secondaryButton: 'Закрыть',

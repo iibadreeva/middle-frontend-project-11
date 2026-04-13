@@ -5,6 +5,9 @@ import { addFeed, clearForm, state } from './model.js';
 import { getFeedAndPostsFromRssDocument } from './utils/get-feed-and-posts-from-rss-document.js';
 import { parseXmlDocument } from './utils/parse-xml-document.js';
 
+const AUTO_UPDATE_INTERVAL = 1000 * 5;
+const FETCH_TIMEOUT = 1000 * 30;
+
 const buildApiUrl = url =>
   `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`;
 
@@ -22,14 +25,12 @@ const checkDuplicate = url =>
 
 const fetchFeed = url =>
   axios
-    .get(buildApiUrl(url))
+    .get(buildApiUrl(url), { timeout: FETCH_TIMEOUT })
     .then(response => {
       if (!response.data?.contents) return Promise.reject(new Error('networkError'));
-      return parseXmlDocument(response.data?.contents);
+      return parseXmlDocument(response.data.contents);
     })
-    .then(response => {
-      return getFeedAndPostsFromRssDocument(response, url);
-    })
+    .then(xmlDoc => getFeedAndPostsFromRssDocument(xmlDoc, url))
     .catch(err => {
       if (err.message === 'networkError') return Promise.reject(err);
       return Promise.reject(new Error('networkError'));
@@ -57,4 +58,39 @@ const handleSubmit = e => {
     });
 };
 
-export { handleSubmit };
+// --- Auto-update ---
+
+const isPostNew = post =>
+  !state.posts.some(existing => existing.link === post.link && existing.title === post.title);
+
+const fetchNewPosts = url =>
+  axios
+    .get(buildApiUrl(url), { timeout: FETCH_TIMEOUT })
+    .then(response => {
+      if (!response.data?.contents) return [];
+      return parseXmlDocument(response.data.contents);
+    })
+    .then(xmlDoc => getFeedAndPostsFromRssDocument(xmlDoc, url))
+    .then(({ posts }) => posts.filter(isPostNew))
+    .catch(() => null); // null signals a fetch error for this url
+
+const checkForNewPosts = () =>
+  Promise.all(state.links.map(fetchNewPosts)).then(results => {
+    const hadError = results.some(r => r === null);
+    const newPosts = results.filter(Boolean).flat();
+
+    if (newPosts.length > 0) {
+      state.posts = [...newPosts, ...state.posts];
+    }
+
+    state.updateError = hadError ? 'networkError' : null;
+  });
+
+const startAutoUpdate = () => {
+  const tick = () => {
+    checkForNewPosts().finally(() => setTimeout(tick, AUTO_UPDATE_INTERVAL));
+  };
+  setTimeout(tick, AUTO_UPDATE_INTERVAL);
+};
+
+export { handleSubmit, startAutoUpdate };
