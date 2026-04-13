@@ -26,7 +26,7 @@ const buildPostItem = ({ title, link, id }) => {
   return li
 }
 
-export const renderPosts = posts => {
+export const renderPosts = (posts) => {
   const section = getFeeds()
   if (!section || posts.length === 0) return
 

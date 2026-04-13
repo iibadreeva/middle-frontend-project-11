@@ -10,7 +10,7 @@ export const bindFormEvents = () => {
   if (form) form.addEventListener('submit', handleSubmit)
 
   if (input) {
-    input.addEventListener('input', e => {
+    input.addEventListener('input', (e) => {
       state.inputValue = e.target.value.trim()
     })
     // Restore current value after template swap
@@ -20,7 +20,7 @@ export const bindFormEvents = () => {
   if (isDocumentClickBound) return
   isDocumentClickBound = true
 
-  document.addEventListener('click', event => {
+  document.addEventListener('click', (event) => {
     const btn = event.target.closest('.js-modal-btn')
     const closeBtn = event.target.closest('.js-close-modal')
 

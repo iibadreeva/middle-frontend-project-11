@@ -12,7 +12,7 @@ const templateMap = {
 
 let lastFormState = null
 
-export const renderFormState = formState => {
+export const renderFormState = (formState) => {
   if (formState === lastFormState) return
   lastFormState = formState
 

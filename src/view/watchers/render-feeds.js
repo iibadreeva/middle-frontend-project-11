@@ -17,7 +17,7 @@ const buildFeedItem = ({ feedTitle, feedDescription }) => {
   return li
 }
 
-export const renderFeeds = feeds => {
+export const renderFeeds = (feeds) => {
   const section = getFeeds()
   if (!section || feeds.length === 0) return
 
