@@ -37,13 +37,15 @@ const fetchFeed = url =>
       let xmlDoc
       try {
         xmlDoc = parseXmlDocument(response.data.contents)
-      } catch {
+      }
+ catch {
         return Promise.reject(new Error('xmlError'))
       }
 
       try {
         return getFeedAndPostsFromRssDocument(xmlDoc, url)
-      } catch {
+      }
+ catch {
         return Promise.reject(new Error('xmlError'))
       }
     })

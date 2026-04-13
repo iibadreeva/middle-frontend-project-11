@@ -8,7 +8,8 @@ export const renderUpdateError = (updateError) => {
   if (updateError) {
     feedback.textContent = i18n.t(`errors.${updateError}`)
     feedback.dataset.errorSource = 'network'
-  } else {
+  }
+ else {
     if (feedback.dataset.errorSource === 'network') {
       feedback.textContent = ''
       delete feedback.dataset.errorSource

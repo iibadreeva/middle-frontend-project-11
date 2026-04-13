@@ -1,9 +1,13 @@
 import js from '@eslint/js'
+import stylistic from '@stylistic/eslint-plugin'
 
 export default [
   js.configs.recommended,
   {
     files: ['**/*.js', '**/*.jsx'],
+    plugins: {
+      '@stylistic': stylistic,
+    },
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
@@ -31,7 +35,7 @@ export default [
       'eol-last': ['error', 'always'],
       'comma-dangle': ['error', 'always-multiline'],
       'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
-      'brace-style': ['error', '1tbs', { allowSingleLine: true }],
+      '@stylistic/brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
     },
   },
 ]

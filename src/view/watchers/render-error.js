@@ -14,7 +14,8 @@ export const renderError = (errors) => {
     feedback.textContent = i18n.t(`errors.${errors.url}`)
     feedback.dataset.errorSource = 'form'
     input?.classList.add('is-invalid')
-  } else {
+  }
+ else {
     if (feedback.dataset.errorSource === 'form') {
       feedback.textContent = ''
       delete feedback.dataset.errorSource
