@@ -36,6 +36,7 @@ export default [
       'comma-dangle': ['error', 'always-multiline'],
       'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
       '@stylistic/brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
+      'operator-linebreak': ['error', 'before'],
     },
   },
 ]

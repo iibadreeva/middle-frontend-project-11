@@ -15,7 +15,7 @@ export const renderError = (errors) => {
     feedback.dataset.errorSource = 'form'
     input?.classList.add('is-invalid')
   }
- else {
+  else {
     if (feedback.dataset.errorSource === 'form') {
       feedback.textContent = ''
       delete feedback.dataset.errorSource
