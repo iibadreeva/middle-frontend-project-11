@@ -1,7 +1,7 @@
 import { handleCloseModal, handlePostClick, handleSubmit } from '../controller.js'
 import { state } from '../model.js'
-import {getInput, getModal} from './helpers/dom.js'
-import {renderModal} from './watchers/render-modal.js'
+import { getInput, getModal } from './helpers/dom.js'
+import { renderModal } from './watchers/render-modal.js'
 
 let isDocumentClickBound = false
 

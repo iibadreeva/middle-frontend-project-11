@@ -19,19 +19,19 @@ const fetchFeed = url =>
       }
 
       try {
-          return parseXmlDocument(response.data.contents)
+        return parseXmlDocument(response.data.contents)
       }
       catch {
         return Promise.reject(new Error('xmlError'))
       }
     })
     .then((xmlDoc) => {
-        try {
-            return getFeedAndPostsFromRssDocument(xmlDoc, url)
-        }
-        catch {
-            return Promise.reject(new Error('xmlError'))
-        }
+      try {
+        return getFeedAndPostsFromRssDocument(xmlDoc, url)
+      }
+      catch {
+        return Promise.reject(new Error('xmlError'))
+      }
     })
     .catch((err) => {
       if (err.message === 'networkError' || err.message === 'xmlError') {

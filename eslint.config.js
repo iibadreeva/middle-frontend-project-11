@@ -37,6 +37,8 @@ export default [
       'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
       '@stylistic/brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
       'operator-linebreak': ['error', 'before'],
+      '@stylistic/indent': ['error', 2],
+      '@stylistic/object-curly-spacing': ['error', 'always'],
     },
   },
 ]
