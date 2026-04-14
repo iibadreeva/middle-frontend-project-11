@@ -1,25 +1,11 @@
 import axios from 'axios'
 import { Modal } from 'bootstrap'
-import * as yup from 'yup'
 
 import { addFeed, clearForm, state } from './model.js'
 import { getFeedAndPostsFromRssDocument } from './utils/get-feed-and-posts-from-rss-document.js'
 import { parseXmlDocument } from './utils/parse-xml-document.js'
-
-const AUTO_UPDATE_INTERVAL = 1000 * 5
-const FETCH_TIMEOUT = 1000 * 30
-
-const buildApiUrl = url =>
-  `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`
-
-// Returns a schema that yields error *codes* (set via yup.setLocale in i18n.js)
-const getSchema = () => yup.object({ url: yup.string().required().url() })
-
-const validateSchema = url =>
-  getSchema()
-    .validate({ url }, { abortEarly: true })
-    .then(() => url)
-    .catch(err => Promise.reject(new Error(err.message)))
+import { FETCH_TIMEOUT, buildApiUrl, AUTO_UPDATE_INTERVAL } from './api/index.js'
+import { validateSchema } from './utils/validate-schema.js'
 
 const checkDuplicate = url =>
   state.links.includes(url) ? Promise.reject(new Error('duplicate')) : Promise.resolve(url)
@@ -117,6 +103,8 @@ const startAutoUpdate = () => {
   }
   setTimeout(tick, AUTO_UPDATE_INTERVAL)
 }
+
+// --- modal (show - hide) ---
 
 const handlePostClick = (element, config = {}) => {
   const modal = Modal.getOrCreateInstance(element, config)
