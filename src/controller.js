@@ -5,8 +5,6 @@ import * as yup from 'yup'
 import { addFeed, clearForm, state } from './model.js'
 import { getFeedAndPostsFromRssDocument } from './utils/get-feed-and-posts-from-rss-document.js'
 import { parseXmlDocument } from './utils/parse-xml-document.js'
-import { getModal } from './view/helpers/dom.js'
-import { renderModal } from './view/watchers/render-modal.js'
 
 const AUTO_UPDATE_INTERVAL = 1000 * 5
 const FETCH_TIMEOUT = 1000 * 30
@@ -34,29 +32,21 @@ const fetchFeed = url =>
         return Promise.reject(new Error('networkError'))
       }
 
-      let xmlDoc
       try {
-        xmlDoc = parseXmlDocument(response.data.contents)
-      }
-      catch {
-        return Promise.reject(new Error('xmlError'))
-      }
-
-      try {
-        return getFeedAndPostsFromRssDocument(xmlDoc, url)
+          return parseXmlDocument(response.data.contents)
       }
       catch {
         return Promise.reject(new Error('xmlError'))
       }
     })
-    // .then(response => {
-    //   if (!response.data?.contents) {
-    //     throw new Error('networkError');
-    //   }
-    //
-    //   const xmlDoc = parseXmlDocument(response.data.contents);
-    //   return getFeedAndPostsFromRssDocument(xmlDoc, url);
-    // })
+    .then((xmlDoc) => {
+        try {
+            return getFeedAndPostsFromRssDocument(xmlDoc, url)
+        }
+        catch {
+            return Promise.reject(new Error('xmlError'))
+        }
+    })
     .catch((err) => {
       if (err.message === 'networkError' || err.message === 'xmlError') {
         return Promise.reject(err)
@@ -128,25 +118,13 @@ const startAutoUpdate = () => {
   setTimeout(tick, AUTO_UPDATE_INTERVAL)
 }
 
-const handlePostClick = (btn) => {
-  const id = btn?.dataset?.id
-  const post = state.posts.find(item => item.id === id)
-  if (!post || !id) return
-
-  renderModal(post, id)
-
-  const modalElement = getModal()
-  if (!modalElement) return
-
-  const modal = Modal.getOrCreateInstance(modalElement)
+const handlePostClick = (element, config = {}) => {
+  const modal = Modal.getOrCreateInstance(element, config)
   modal.show()
 }
 
-const handleCloseModal = () => {
-  const modalElement = getModal()
-  if (!modalElement) return
-
-  const modal = Modal.getOrCreateInstance(modalElement)
+const handleCloseModal = (element, config = {}) => {
+  const modal = Modal.getOrCreateInstance(element, config)
   modal.hide()
 }
 
